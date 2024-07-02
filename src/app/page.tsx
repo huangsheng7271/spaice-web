@@ -6,7 +6,6 @@ export default function Home() {
            立即登陆
        </button>
 
-
         <style jsx>{`
           .button{
             color: crimson;
