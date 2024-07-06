@@ -4,11 +4,9 @@ import { Tooltip,Button} from "antd";
 import ZagTooltip from "@/components/ui/Tooltip";
 
 export default function Home() {
-    //
 
     return (
         <div className="App">
-
             <Tooltip title="I am Tooltip" color={"#2f343e"}>
                 <Button type="primary">Hover me</Button>
             </Tooltip>
