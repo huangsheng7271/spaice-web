@@ -1,7 +1,6 @@
 "use client"
 
-import React from "react";
-/*Antd动画库，主要作用是在动画各个状态自动为class属性添加相应的css规则，可用react-transition-group代替*/
+import React, { useId } from "react";
 import CSSMotion from 'rc-motion';
 import * as tooltip from "@zag-js/tooltip"
 import { useMachine, normalizeProps } from "@zag-js/react"
@@ -14,9 +13,10 @@ interface ZagTooltipProps {
 
 const ZagTooltip: React.FC<ZagTooltipProps> = ({ children,color,title }) =>{
     const [state, send] = useMachine(tooltip.machine({
-        id: "1",
+        id: useId(),
         openDelay:100,
         closeDelay:100,
+        closeOnPointerDown:false,
         positioning: {
             placement: "top",
             strategy: "absolute",
@@ -27,7 +27,7 @@ const ZagTooltip: React.FC<ZagTooltipProps> = ({ children,color,title }) =>{
     const bgColor = color || 'rgba(0, 0, 0, 0.85)';
 
     return (
-        <>
+        <div>
             {React.isValidElement(children) ? React.cloneElement(children, api.getTriggerProps()) : <>{children}</>}
             {title && (
                 <div {...api.getPositionerProps()}>
@@ -56,7 +56,7 @@ const ZagTooltip: React.FC<ZagTooltipProps> = ({ children,color,title }) =>{
                     line-height: 1.5714285714285714;
                     list-style: none;
                     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-                    /* position: absolute;*/
+                    /*position: absolute;*/
                     z-index: 1070;
                     display: block;
                     width: max-content;
@@ -82,7 +82,6 @@ const ZagTooltip: React.FC<ZagTooltipProps> = ({ children,color,title }) =>{
                     border-radius: 6px;
                     box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
                     box-sizing: border-box;
-                    
                 }
                 
                 .ant-tooltip-arrow {
@@ -116,7 +115,7 @@ const ZagTooltip: React.FC<ZagTooltipProps> = ({ children,color,title }) =>{
                     content: "";
                 }
             `}</style>
-        </>
+        </div>
     );
 }
 export default ZagTooltip;

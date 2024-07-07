@@ -7,6 +7,13 @@
 :root {
     --ant-size-popup-arrow: 16px;
     --antd-arrow-background-color: rgba(0, 0, 0, 0.85);
+
+    --background: #ffffff;
+    --foreground: #000000;
+    --accent: #f4f4f5;
+    --accent-foreground: #18181b;
+    --input: #e4e4e7;
+    --ring: #18181b;
 }
 
 .zoom-big-fast-appear,
