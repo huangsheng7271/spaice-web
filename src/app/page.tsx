@@ -91,6 +91,7 @@ export default function Home() {
                 .sidebar-button {
                     display: flex;
                     width: 100%;
+                    height: 40px; /* Adjust the height as needed */
                     font-size: 14px;
                     align-items: center;
                     padding: 12px 12px;
