@@ -61,6 +61,8 @@ body {
     --lvv-color-scenes-panel: rgba(18,18,20,.8);
     --lvv-color-text-primary: #ebf8ff;
     --background-1: #0f1115;
+    --text-tertiary: rgba(224,245,255,.6);
+    --line-2: rgba(184,221,255,.12);
     --skeleton-background: linear-gradient(30deg,#eff3f5 20%,hsla(0,0%,98%,.8) 50%,#eff3f5 80%);
 }
 
