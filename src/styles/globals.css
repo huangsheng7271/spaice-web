@@ -1,13 +1,8 @@
-/* 引入normalize.css库以确保跨浏览器的一致性和标准化 */
-@import 'normalize.css';
+@import "animate.css";
 
-/* -------------------------------------------------------------------------- */
-/*                               My Custom Styles                             */
-/* -------------------------------------------------------------------------- */
-:root {
+/*:root {
     --ant-size-popup-arrow: 16px;
     --antd-arrow-background-color: rgba(0, 0, 0, 0.85);
-
     --background: #ffffff;
     --foreground: #000000;
     --accent: #f4f4f5;
@@ -16,85 +11,59 @@
     --ring: #18181b;
 }
 
-.zoom-big-fast-appear,
-.zoom-big-fast-enter,
-.zoom-big-fast-leave {
-    -webkit-animation-duration: .1s;
-    animation-duration: .1s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-    -webkit-animation-play-state: paused;
-    animation-play-state: paused;
-}
-.zoom-big-fast-appear.zoom-big-fast-appear-active,
-.zoom-big-fast-enter.zoom-big-fast-enter-active {
-    -webkit-animation-name: antZoomBigIn;
-    animation-name: antZoomBigIn;
-    -webkit-animation-play-state: running;
-    animation-play-state: running;
-}
-.zoom-big-fast-leave.zoom-big-fast-leave-active {
-    -webkit-animation-name: antZoomBigOut;
-    animation-name: antZoomBigOut;
-    -webkit-animation-play-state: running;
-    animation-play-state: running;
-}
-.zoom-big-fast-appear,
-.zoom-big-fast-enter {
-    -webkit-transform: scale(0);
-    -ms-transform: scale(0);
-    transform: scale(0);
-    -webkit-animation-timing-function: cubic-bezier(.08, .82, .17, 1);
-    animation-timing-function: cubic-bezier(.08, .82, .17, 1);
-}
-.zoom-big-fast-leave {
-    -webkit-animation-timing-function: cubic-bezier(.78, .14, .15, .86);
-    animation-timing-function: cubic-bezier(.78, .14, .15, .86);
+html,body{
+    --tw-bg-opacity: 1;
+    background-color: rgb(249 250 251 / 1);
+    !*background-color: white;*!
+    min-height: 100vh;
 }
 
-@-webkit-keyframes antZoomBigIn {
-    0% {
-        opacity: 0;
-        -webkit-transform: scale(.8);
-        transform: scale(.8);
-    }
-    to {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
+*, :after, :before {
+    box-sizing: border-box;
+}*/
+
+* {
+    outline: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scrollbar-width: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
-@keyframes antZoomBigIn {
-    0% {
-        opacity: 0;
-        -webkit-transform: scale(.8);
-        transform: scale(.8);
-    }
-    to {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
+
+body, html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: PingFang SC, Microsoft YaHei, BlinkMacSystemFont, -apple-system, Hiragino Sans GB, Helvetica Neue, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
 }
-@-webkit-keyframes antZoomBigOut {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
-    to {
-        opacity: 0;
-        -webkit-transform: scale(.8);
-        transform: scale(.8);
-    }
+
+body, html {
+    background: var(--background-1);
+    font-family: CapCut Sans, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif !important;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior-x: none;
+    padding: 0;
 }
-@keyframes antZoomBigOut {
-    0% {
-        -webkit-transform: scale(1);
-        transform: scale(1);
-    }
-    to {
-        opacity: 0;
-        -webkit-transform: scale(.8);
-        transform: scale(.8);
-    }
+
+body {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
 }
+
+body {
+    --side-menu-titlebar-height: 76px;
+    --lvv-color-scenes-panel: rgba(18,18,20,.8);
+    --lvv-color-text-primary: #ebf8ff;
+    --background-1: #0f1115;
+    --skeleton-background: linear-gradient(30deg,#eff3f5 20%,hsla(0,0%,98%,.8) 50%,#eff3f5 80%);
+}
+
+
 
 

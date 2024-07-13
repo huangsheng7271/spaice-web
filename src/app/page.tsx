@@ -1,172 +1,105 @@
 "use client"
 
-import ZagTooltip from "@/components/ui/Tooltip";
-import { Tooltip } from "antd";
-import {CircleHelp} from "lucide-react";
-
-
+import {Logo} from "@/components/ui/logo"
 export default function Home() {
 
     return (
-        <div className="h-full">
-            <div className="h-full flex-column">
-                <div className="flex-1">
-                    <div className="sidebar">
-                        <div className="sidebar-content">
-                            <div className="sidebar-inner">
-                                <div className="button-container">
-                                    <button className="sidebar-button active-button">Browse</button>
-                                    <button className="sidebar-button inactive-button">Newsletter</button>
-                                </div>
+        <div id="ai-home" className="lv-theme-force_dark">
+            <div className="global-mweb-container">
+                <div className="root">
+                    <div className="top-down-layer mweb-layout-container">
+                        <div className="platform-ui-service-header-container mweb-titlebar-logo-container">
+                            <div className="header-left">
+                                <Logo/>
                             </div>
+                            <div className="header-center"></div>
+                            <div className="header-right"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            {/* <ZagTooltip title="I am ZagTooltip" color={"#2f343e"}>
-                <button className="outline-button">Hover me</button>
-            </ZagTooltip>
-            <Tooltip
-                title="资深广告专家，以创新、沟通、策划、设计、文案、媒体知识、数据分析和项目管理等多方面的卓越能力享誉业内，能够为用户提供最前沿的广告策略和执行方案。"
-                color={"#2f343e"}>
-                <CircleHelp size={20} className="helpIcon"/>
-            </Tooltip>
-            */}
 
-
-            <style jsx global>{`
-                .h-full {
-                    height: 100%;
-                }
-
-                .flex-column {
+            <style jsx>{`
+                .global-mweb-container {
                     display: flex;
                     flex-direction: column;
+                    height: 100vh;
+                    min-width: 1020px;
+                    width: 100vw;
                 }
 
-                .flex-1 {
-                    flex: 1;
-                }
-
-                .sidebar {
-                    display: none;
+                .root {
                     height: 100%;
-                    width: 268px;
-                    flex-direction: column;
-                    position: fixed;
-                    top: 0;
-                    bottom: 0;
-                    z-index: 48;
-                }
-
-                .sidebar-content {
-                    height: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    background-color: white;
-                    overflow-y: auto;
-                    border-right-width: 1px;
-                    
-                    margin: 6px;
-                    border-radius: 8px;
-                }
-
-                .sidebar-inner {
-                    display: flex;
-                    flex-direction: column;
+                    overflow: hidden;
                     width: 100%;
-                    flex: 1;
                 }
 
-                .button-container {
-                    display: flex;
-                    flex-direction: column;
-                    padding: .75rem;
-                }
-
-                .button-container > * + * {
-                    margin-top: 6px;
-                }
-
-                .sidebar-button {
-                    display: flex;
-                    width: 100%;
-                    height: 40px; /* Adjust the height as needed */
-                    font-size: 14px;
-                    align-items: center;
-                    padding: 12px 12px;
-                    border-radius: 8px;
-                    transition: background-color 0.3s;
-                    cursor: pointer;
-                    border: none;
+                .mweb-layout-container {
                     background: none;
-                    text-align: left;
-                    font-family: inherit;
+                    height: 100%;
+                    min-width: 1024px;
+                    width: 100%;
                 }
 
-                .sidebar-button:hover {
-                    background-color: #f3f4f6;
+                .container, .top-down-layer {
+                    display: flex;
+                    height: 100%;
+                    overflow: hidden;
+                    width: 100%;
                 }
 
-                .active-button {
-                    background-color: #f3f4f6;
-                    color: #1f2937;
-                    font-weight: 500;
+                .top-down-layer {
+                    flex-direction: column;
                 }
 
-                .inactive-button {
-                    color: #6b7280;
+                .mweb-layout-container .platform-ui-service-header-container {
+                    backdrop-filter: none;
+                    -webkit-backdrop-filter: none;
                 }
 
-                @media (min-width: 1024px) {
-                    .sidebar {
-                        display: flex;
-                    }
-                }
-
-
-                .helpIcon {
-                    color: #333;
-                    transition: color 0.2s ease-out;
-                }
-
-                .helpIcon:hover {
-                    color: #767676;
-                }
-
-                .outline-button {
-                    display: inline-flex;
+                .platform-ui-service-header-container {
                     align-items: center;
-                    justify-content: center;
-                    white-space: nowrap;
-                    border-radius: 0.375rem;
-                    font-size: 0.875rem;
-                    font-weight: 500;
-                    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-                    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-                    transition-duration: 150ms;
-                    background-color: var(--background);
-                    border: 1px solid var(--input);
-                    color: var(--foreground);
-                    padding: 0.5rem 1rem;
-
-                    box-shadow: 0 0 6px -2px rgba(0, 0, 0, 0.1);
+                    -webkit-backdrop-filter: blur(20px);
+                    backdrop-filter: blur(20px);
+                    background-color: var(--lvv-color-scenes-panel);
+                    box-sizing: border-box;
+                    display: flex;
+                    height: 72px;
+                    justify-content: space-between;
+                    padding: 10px 40px;
+                    -webkit-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                    width: 100%;
+                    z-index: 99;
                 }
 
-                .outline-button:hover {
-                    background-color: var(--accent);
-                    color: var(--accent-foreground);
+                .platform-ui-service-header-container {
+                    height: var(--side-menu-titlebar-height);
+                    position: absolute;
                 }
 
-                .outline-button:focus-visible {
-                    outline: 2px solid transparent;
-                    outline-offset: 2px;
-                    box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
+                .mweb-titlebar-logo-container {
+                    -webkit-backdrop-filter: unset;
+                    backdrop-filter: unset;
+                    background-color: var(--background-1);
+                    padding: 20px 16px 18px 19px;
                 }
 
-                .outline-button:disabled {
-                    pointer-events: none;
-                    opacity: 0.5;
+                .platform-ui-service-header-container .header-left {
+                    color: var(--lvv-color-text-primary);
+                }
+
+                .platform-ui-service-header-container .header-center, .platform-ui-service-header-container .header-left, .platform-ui-service-header-container .header-right {
+                    position: relative;
+                }
+
+                .platform-ui-service-header-container .header-left, .platform-ui-service-header-container .header-right, .platform-ui-service-header-container .temp-header-for-calc {
+                    align-items: center;
+                    box-sizing: border-box;
+                    display: flex;
+                    flex-wrap: wrap;
                 }
             `}</style>
         </div>
