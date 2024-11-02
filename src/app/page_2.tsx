@@ -2,22 +2,22 @@
 
 import React, { useState } from 'react';
 import ZagTooltip from "@/components/ui/Tooltip";
-import {Tooltip,Card} from "antd";
-import {CircleHelp,House,Gift,ImagePlus} from "lucide-react";
+import { Tooltip, Card } from "antd";
+import { CircleHelp, House, Gift, ImagePlus } from "lucide-react";
 
 export default function Home() {
-    const menuItems = ['首页', '活动','图片生成'];
+    const menuItems = ['首页', '活动', '图片生成'];
     const [activeItem, setActiveItem] = useState(menuItems[0]);
 
-    const iconMap:{
+    const iconMap: {
         [key: string]: React.ReactElement<React.ComponentProps<typeof House>>
     } = {
-        "首页": <House width={20} style={{marginRight:"8px"}}/>,
-        "活动":<Gift width={20} style={{marginRight:"8px"}}/>,
-        "图片生成": <ImagePlus width={20} style={{marginRight:"8px"}}/>
+        "首页": <House width={20} style={{ marginRight: "8px" }} />,
+        "活动": <Gift width={20} style={{ marginRight: "8px" }} />,
+        "图片生成": <ImagePlus width={20} style={{ marginRight: "8px" }} />
     };
 
-    const handleClick = (item:string) => {
+    const handleClick = (item: string) => {
         setActiveItem(item);
     };
 
@@ -59,7 +59,7 @@ export default function Home() {
                                         color: "rgb(180 83 9)",
                                         padding: "2px 12px",
                                     }}>
-                                        <Gift width={20} style={{marginRight: "8px"}}/>
+                                        <Gift width={20} style={{ marginRight: "8px" }} />
                                         开通会员 获赠积分
                                     </button>
                                 </Tooltip>
@@ -67,7 +67,7 @@ export default function Home() {
                                     <span className="avatar" role="button">
                                         <img
                                             src="https://lh3.googleusercontent.com/a/ACg8ocIVKR6dfkxilLJlJkVfO4fZox5OmSESxdFO5KNw3gd2d2pIFBI=s96-c"
-                                            alt="黄胜" className="avatar-image"/>
+                                            alt="黄胜" className="avatar-image" />
                                     </span>
                                 </div>
                             </div>
@@ -103,7 +103,6 @@ export default function Home() {
                     </main>
                 </div>
             </div>
-
 
             <style jsx>{`
                 .h-full {
