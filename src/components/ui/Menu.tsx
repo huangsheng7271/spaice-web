@@ -1,77 +1,78 @@
 import React, { useState } from 'react';
-import { Compass, Gift, UserRound, ImagePlus, ShoppingBag, Bookmark, Bell, Mail } from 'lucide-react';
+import { Palette, Compass, Gift, UserRound, ImagePlus, ShoppingBag, Bookmark, Bell, Mail } from 'lucide-react';
 
 type MenuItem = {
-    icon: React.ElementType;
-    label: string;
-    id: string;
+  icon: React.ElementType;
+  label: string;
+  id: string;
 };
 
 type MenuGroup = {
-    items: MenuItem[];
-    className: string;
+  items: MenuItem[];
+  className: string;
 };
 
 const initialMenuData: MenuGroup[] = [
-    {
-        className: "menuGroup-jfQPdZ mweb-menu-group-main",
-        items: [
-            { icon: ImagePlus, label: '室内生成', id: 'generate' },
-            { icon: Compass, label: '探索', id: 'explore' }
-        ],
-    },
-    {
-        className: "menuGroup-jfQPdZ mweb-menu-group-tools",
-        items: [
-            { icon: UserRound, label: '个人主页', id: 'profile' },
-            { icon: ShoppingBag, label: '资产', id: 'assets' },
-            { icon: Bookmark, label: '收藏', id: 'favorites' },
-            { icon: Gift, label: '活动', id: 'activity' },
-        ],
-    },
-    {
-        className: "menuGroup-jfQPdZ mweb-menu-group-other",
-        items: [
-            { icon: Bell, label: '消息', id: 'messages' },
-            { icon: Mail, label: '邀请', id: 'invite' },
-        ],
-    },
+  {
+    className: "menuGroup-jfQPdZ mweb-menu-group-main",
+    items: [
+      { icon: Compass, label: '推荐', id: 'recommend' },
+      { icon: Palette, label: '风格', id: 'category' },
+      { icon: ImagePlus, label: '室内生成', id: 'generate' },
+    ],
+  },
+  {
+    className: "menuGroup-jfQPdZ mweb-menu-group-tools",
+    items: [
+      { icon: UserRound, label: '个人主页', id: 'profile' },
+      { icon: ShoppingBag, label: '资产', id: 'assets' },
+      { icon: Bookmark, label: '收藏', id: 'favorites' },
+      { icon: Gift, label: '活动', id: 'activity' },
+    ],
+  },
+  {
+    className: "menuGroup-jfQPdZ mweb-menu-group-other",
+    items: [
+      { icon: Bell, label: '消息', id: 'messages' },
+      { icon: Mail, label: '邀请', id: 'invite' },
+    ],
+  },
 ];
 
 export const Menu: React.FC = () => {
-    const [selectedItemId, setSelectedItemId] = useState('explore');
+  const [selectedItemId, setSelectedItemId] = useState('explore');
 
-    const handleItemClick = (itemId: string) => {
-        setSelectedItemId(itemId);
-    };
+  const handleItemClick = (itemId: string) => {
+    setSelectedItemId(itemId);
+  };
 
-    return (
-        <div role="menu" className="lv-menu lv-menu-light lv-menu-vertical menu-_pM9FX top-menu-OzXbX5">
-            <div className="lv-menu-inner">
-                {initialMenuData.map((group, groupIndex) => (
-                    <div key={groupIndex} className={group.className}>
-                        {group.items.map((item) => (
-                            <div
-                                key={item.id}
-                                className={`lv-menu-item ${selectedItemId === item.id ? 'lv-menu-selected' : ''} lv-menu-item-size-default`}
-                                onClick={() => handleItemClick(item.id)}
-                            >
-                                <div className="inner-menu-Ughms8">
-                                    <item.icon size={19}/>
-                                    <span style={{opacity: 1}}>{item.label}</span>
-                                </div>
-                            </div>
-                        ))}
-                        {groupIndex < initialMenuData.length - 1 && (
-                            <div className="split-line-container-wi45va">
-                                <div className="split-line-sQWKJF"></div>
-                            </div>
-                        )}
-                    </div>
-                ))}
-            </div>
+  return (
+    <div role="menu" className="lv-menu lv-menu-light lv-menu-vertical menu-_pM9FX top-menu-OzXbX5">
+      <div className="lv-menu-inner">
+        {initialMenuData.map((group, groupIndex) => (
+          <div key={groupIndex} className={group.className}>
+            {group.items.map((item) => (
+              <div
+                key={item.id}
+                className={`lv-menu-item ${selectedItemId === item.id ? 'lv-menu-selected' : ''} lv-menu-item-size-default`}
+                onClick={() => handleItemClick(item.id)}
+              >
+                <div className="inner-menu-Ughms8">
+                  {React.createElement(item.icon, { size: 19 })}
+                  <span style={{ opacity: 1 }}>{item.label}</span>
+                </div>
+              </div>
+            ))}
+            {groupIndex < initialMenuData.length - 1 && (
+              <div className="split-line-container-wi45va">
+                <div className="split-line-sQWKJF"></div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
                 .menu-_pM9FX.lv-menu {
                     background: var(--side-menu-background);
                     padding: var(--ui-configuration-side-menu-padding);
@@ -94,7 +95,7 @@ export const Menu: React.FC = () => {
                     line-height: 1.5715;
                     padding: 8px;
                     position: relative;
-                    transition: width .2s cubic-bezier(.34, .69, .1, 1);
+                    transition: width .15s cubic-bezier(.34, .69, .1, 1);
                     width: 100%;
                 }
 
@@ -155,7 +156,7 @@ export const Menu: React.FC = () => {
                     line-height: 22px;
                     margin-bottom: 0;
                     overflow: visible;
-                    transition: background-color .2s ease-out, color .1s ease-out;
+                    transition: background-color .15s ease, color .1s ease;
                 }
                 .lv-menu-light .lv-menu-item.lv-menu-selected {
                     background-color: var(--lvv-color-fill-bg-4);
@@ -168,7 +169,7 @@ export const Menu: React.FC = () => {
 
                 .lv-menu-inner .lv-menu-item.lv-menu-item-size-default:hover, .lv-menu-inner .lv-menu-item.lv-menu-selected {
                     background: var(--block-default);
-                    color: var(--text-primary);
+                    {/*color: var(--text-primary); */}
                 }
 
                 .lv-menu-vertical .lv-menu-item-size-default {
@@ -255,74 +256,6 @@ export const Menu: React.FC = () => {
                     width: var(--side-menu-group-name-width);
                 }
             `}</style>
-        </div>
-    );
-};
-
-{/* <div role="menu" className="lv-menu lv-menu-light lv-menu-vertical menu-_pM9FX top-menu-OzXbX5">
-    <div className="lv-menu-inner">
-        <div className="menuGroup-jfQPdZ mweb-menu-group-main">
-            <div className="lv-menu-item lv-menu-selected lv-menu-item-size-default">
-                <div className="inner-menu-Ughms8">
-                    <Compass size={"19"}/>
-                    <span style={{opacity: 1}}>探索</span>
-                </div>
-            </div>
-            <div className="lv-menu-item lv-menu-item-size-default">
-                <div className="inner-menu-Ughms8">
-                    <Gift size={"19"}/>
-                    <span style={{opacity: 1}}>活动</span>
-                </div>
-            </div>
-            <div className="lv-menu-item lv-menu-item-size-default">
-                <div className="inner-menu-Ughms8">
-                    <UserRound size={"19"}/>
-                    <span style={{opacity: 1}}>个人主页</span>
-                </div>
-            </div>
-            <div className="split-line-container-wi45va">
-                <div className="split-line-sQWKJF"></div>
-            </div>
-        </div>
-        <div className="menuGroup-jfQPdZ mweb-menu-group-tools">
-           <div className="menuGroupName-WhTphV mweb-menu-group-tools-name">
-                创作中心
-            </div>
-            <div className="lv-menu-item lv-menu-item-size-default">
-                <div className="inner-menu-Ughms8">
-                    <ImagePlus size={"19"}/>
-                    <span style={{opacity: 1}}>室内生成</span>
-                </div>
-            </div>
-            <div className="lv-menu-item lv-menu-item-size-default">
-                <div className="inner-menu-Ughms8">
-                    <ShoppingBag size={"19"}/>
-                    <span style={{opacity: 1}}>资产</span>
-                </div>
-            </div>
-            <div className="lv-menu-item lv-menu-item-size-default">
-                <div className="inner-menu-Ughms8">
-                    <Bookmark size={"19"}/>
-                    <span style={{opacity: 1}}>收藏</span>
-                </div>
-            </div>
-        </div>
-        <div className="menuGroup-jfQPdZ mweb-menu-group-other">
-            <div className="split-line-container-wi45va">
-                <div className="split-line-sQWKJF"></div>
-            </div>
-            <div className="lv-menu-item lv-menu-item-size-default">
-                <div className="inner-menu-Ughms8">
-                    <Bell size={"19"}/>
-                    <span style={{opacity: 1}}>消息</span>
-                </div>
-            </div>
-            <div className="lv-menu-item lv-menu-item-size-default">
-                <div className="inner-menu-Ughms8">
-                    <Mail size={"19"}/>
-                    <span style={{opacity: 1}}>邀请</span>
-                </div>
-            </div>
-        </div>
     </div>
-</div>*/}
+  );
+};

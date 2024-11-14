@@ -11,14 +11,14 @@ interface ItemOption {
   views: number
 }
 
-interface CardProps {
+interface MasonryItemProps {
   item: ItemOption;
   onlyImage?: boolean;
   noImage?: boolean;
   width?: string;
 }
 
-const Card: React.FC<CardProps> = ({ 
+const MasonryItem: React.FC<MasonryItemProps> = ({ 
   item, 
   onlyImage = false, 
   noImage = false, 
@@ -26,6 +26,7 @@ const Card: React.FC<CardProps> = ({
 }) => {
   const [loaded, setLoaded] = useState(false);
   const [height, setHeight] = useState('auto');
+  const imageColor = "rgb(29, 33, 41)";
 
   useEffect(() => {
     if (!noImage) {
@@ -54,42 +55,23 @@ const Card: React.FC<CardProps> = ({
               <img src={item.avatar} alt={item.user} />
               <span>{item.user}</span>
             </div>
-            <div className="views">❤️ {item.views > 999 ? '999+' : item.views}</div>
           </div>
         </div>
       )}
-      {!noImage && (
-        <div className="cover">
-          {loaded ? (
-            <img src={item.url} alt="图片" />
-          ) : (
-            <svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
-              <g fill="none" fillRule="evenodd" strokeWidth="2">
-                <circle cx="22" cy="22" r="1">
-                  <animate attributeName="r" begin="0s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"></animate>
-                  <animate attributeName="stroke-opacity" begin="0s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"></animate>
-                </circle>
-                <circle cx="22" cy="22" r="1">
-                  <animate attributeName="r" begin="-0.9s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"></animate>
-                  <animate attributeName="stroke-opacity" begin="-0.9s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"></animate>
-                </circle>
-              </g>
-            </svg>
-          )}
-        </div>
-      )}
+      <div className="cover">
+        <img src={item.url} alt="图片" />
+      </div>
+
       <style jsx>{`
         .card {
           display: flex;
           flex-direction: column-reverse;
           width: ${width};
           height: ${height};
+          background: var(--background-panel);
+          border-radius: 8px;
+          cursor: pointer;
           overflow: hidden;
-          background: white;
-          border: 1px solid #e3e8f7;
-          border-radius: 10px;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-          transition: all 0.3s ease-in-out;
         }
         .cover {
           display: flex;
@@ -110,14 +92,16 @@ const Card: React.FC<CardProps> = ({
         .body {
           flex-shrink: 0;
           box-sizing: border-box;
-          height: fit-content;
+          height: 84px;
           padding: 12px;
+          background-color: ${imageColor};
         }
         .body h3 {
           margin: 0;
           padding: 0;
           font-weight: bolder;
           font-size: 14px;
+          color: #fffefe;
         }
         .author {
           display: flex;
@@ -140,18 +124,14 @@ const Card: React.FC<CardProps> = ({
         .avatar span {
           margin-left: 4px;
           overflow: hidden;
-          color: #333333;
+          color: #fffefe;
           font-size: 12px;
           white-space: nowrap;
           text-overflow: ellipsis;
-        }
-        .views {
-          color: #333333;
-          font-size: 12px;
         }
       `}</style>
     </article>
   );
 };
 
-export default Card;
+export default MasonryItem;

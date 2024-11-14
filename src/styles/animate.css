@@ -1,7 +1,7 @@
 /* -------------------------------------------------------------------------- */
 /*                               动画样式                                      */
 /* -------------------------------------------------------------------------- */
-.zoom-big-fast-appear,
+/* .zoom-big-fast-appear, */
 .zoom-big-fast-enter,
 .zoom-big-fast-leave {
     -webkit-animation-duration: .1s;
@@ -11,7 +11,7 @@
     -webkit-animation-play-state: paused;
     animation-play-state: paused;
 }
-.zoom-big-fast-appear.zoom-big-fast-appear-active,
+/* .zoom-big-fast-appear.zoom-big-fast-appear-active, */
 .zoom-big-fast-enter.zoom-big-fast-enter-active {
     -webkit-animation-name: antZoomBigIn;
     animation-name: antZoomBigIn;
@@ -24,7 +24,7 @@
     -webkit-animation-play-state: running;
     animation-play-state: running;
 }
-.zoom-big-fast-appear,
+/* .zoom-big-fast-appear, */
 .zoom-big-fast-enter {
     -webkit-transform: scale(0);
     -ms-transform: scale(0);

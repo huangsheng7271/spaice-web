@@ -13,9 +13,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="zh-Hans">
-      <body lv-theme-version="2.0" lv-theme="dark" style={{height: '1000px',paddingRight: '0px'}}>
+      {/* 设置 height:'100vh' 是为了让 Masonry 能够实现虚拟列表 */}
+      {/* style={{height:'100vh'}} */}
+      <body id="root" lv-theme-version="2.0" lv-theme="dark" style={{height:'100vh'}}>
         <StyledJsxRegistry>
             {children}
         </StyledJsxRegistry>

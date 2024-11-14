@@ -56,7 +56,7 @@ const ZagTooltip: React.FC<ZagTooltipProps> = ({ children,color,title }) =>{
                     line-height: 1.5714285714285714;
                     list-style: none;
                     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-                    /*position: absolute;*/
+                  
                     z-index: 1070;
                     display: block;
                     width: max-content;
@@ -119,3 +119,4 @@ const ZagTooltip: React.FC<ZagTooltipProps> = ({ children,color,title }) =>{
     );
 }
 export default ZagTooltip;
+

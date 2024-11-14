@@ -2,8 +2,9 @@
 
 import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { useElementSize, useElementBounding } from '@reactuses/core';
+import { ItemOption } from '@/types/masonry';
 
-interface VirtualWaterfallProps {
+interface MasonryProps {
   // 是否启用虚拟列表
   virtual?: boolean
   rowKey?: string
@@ -22,8 +23,8 @@ interface VirtualWaterfallProps {
   // 数据
   items?: any[]
   // 计算单个item高度的方法
-  calcItemHeight?: (item: any, itemWidth: number) => number
-  children?: (item:any, index:number) => ReactNode;
+  calcItemHeight?: (item: ItemOption, itemWidth: number) => number,
+  children?: (item: any, index: number) => ReactNode;
 }
 
 interface SpaceOption {
@@ -36,33 +37,22 @@ interface SpaceOption {
   height: number;
 }
 
-const VirtualWaterfall: React.FC<VirtualWaterfallProps> = ({
+const Masonry: React.FC<MasonryProps> = ({
   virtual = true,
   rowKey = 'id',
-  gap = 15,
-  padding = 15,
+  gap = 10,
+  padding = 0,
   preloadScreenCount = [0, 0],
-  itemMinWidth = 240,
-  maxColumnCount = 10,
+  itemMinWidth = 250,
+  maxColumnCount = 5,
   minColumnCount = 2,
   items = [],
-  calcItemHeight = (item: any, itemWidth: number) => 380,
+  calcItemHeight = () => 250,
   children
 }) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [contentWidth] = useElementSize(contentRef);
   const { top: contentTop } = useElementBounding(contentRef)
-
-  /*onMounted(() => {
-    // 这里是为了解决服务器端无法正常显示的问题: https://github.com/lhlyu/vue-virtual-waterfall/issues/5
-    if (contentWidth.value === 0) {
-        contentWidth.value = Number.parseInt(window.getComputedStyle(content.value).width)
-    }
-  })*/
-
-  const isNumber = (value: any): boolean => {
-    return Object.prototype.toString.call(value) === '[object Number]';
-  };
 
   // 计算列数
   const columnCount = useMemo<number>(() => {
@@ -71,11 +61,11 @@ const VirtualWaterfall: React.FC<VirtualWaterfallProps> = ({
     }
     const cWidth = contentWidth
     if (cWidth >= itemMinWidth * 2) {
-        const count = Math.floor(cWidth / itemMinWidth)
-        if (maxColumnCount && count > maxColumnCount) {
-            return maxColumnCount
-        }
-        return count
+      const count = Math.floor(cWidth / itemMinWidth)
+      if (maxColumnCount && count > maxColumnCount) {
+        return maxColumnCount
+      }
+      return count
     }
     return minColumnCount
   }, [contentWidth, itemMinWidth, maxColumnCount, minColumnCount]);
@@ -83,29 +73,23 @@ const VirtualWaterfall: React.FC<VirtualWaterfallProps> = ({
   // 计算每个item占据的宽度: (容器宽度 - 间隔) / 列数
   const itemWidth = useMemo<number>(() => {
     if (!contentWidth || columnCount <= 0) {
-        return 0
+      return 0
     }
     // 列之间的间隔
     const gapSum = (columnCount - 1) * gap
-    
     return Math.ceil((contentWidth - gapSum) / columnCount)
-  },[contentWidth,columnCount])
+  }, [contentWidth, columnCount])
 
   // 每列距离顶部的距离
-  const columnsTop = useRef<number[]>([]);
-  useEffect(() => {
-    columnsTop.current = new Array(columnCount).fill(0);
-  }, [columnCount]);
+  const columnsTop = useRef<number[]>(new Array(columnCount).fill(0));
 
   // 计算每个item占据的空间
   const [itemSpaces, setItemSpaces] = useState<SpaceOption[]>([]);
-
   useEffect(() => {
     if (!columnCount) {
-        setItemSpaces([])
-        return
+      setItemSpaces([])
+      return
     }
-
     const length = items.length
     const spaces = new Array(length)
 
@@ -120,44 +104,43 @@ const VirtualWaterfall: React.FC<VirtualWaterfallProps> = ({
 
     // 为了高性能采用for-i
     for (let i = 0; i < length; i++) {
-        if (cache && i < start) {
-            spaces[i] = itemSpaces[i]
-            continue
-        }
+      if (cache && i < start) {
+        spaces[i] = itemSpaces[i]
+        continue
+      }
 
-        const columnIndex = getColumnIndex()
-       
-        
-        // 计算元素的高度
-        const h = calcItemHeight(items[i], itemWidth)
-        const top = columnsTop.current[columnIndex]
-        const left = (itemWidth + gap) * columnIndex
-        
-        const space: SpaceOption = {
-            index: i,
-            item: items[i],
-            column: columnIndex,
-            top: top,
-            left: left,
-            bottom: top + h,
-            height: h
-        }
+      const columnIndex = getColumnIndex()
+      // 计算元素的高度
+      const h = calcItemHeight(items[i], itemWidth)
+      const top = columnsTop.current[columnIndex]
+      const left = (itemWidth + gap) * columnIndex
 
-        // 累加当前列的高度
-        columnsTop.current[columnIndex] += h + gap;
-        spaces[i] = space
+      const space: SpaceOption = {
+        index: i,
+        item: items[i],
+        column: columnIndex,
+        top: top,
+        left: left,
+        bottom: top + h,
+        height: h
+      }
+
+      // 累加当前列的高度
+      columnsTop.current[columnIndex] += h + gap;
+      spaces[i] = space
     }
     setItemSpaces(spaces)
-  },[columnCount,itemWidth,items,gap])
+  }, [columnCount, itemWidth, items, gap])
+
 
   // 虚拟列表逻辑：需要渲染的items
   const itemRenderList = useMemo<SpaceOption[]>(() => {
     const length = itemSpaces.length
     if (!length) {
-        return []
+      return []
     }
     if (!virtual) {
-        return itemSpaces
+      return itemSpaces
     }
 
     // 父节点距离顶部的距离
@@ -173,69 +156,72 @@ const VirtualWaterfall: React.FC<VirtualWaterfallProps> = ({
     const minLimit = tp - topPreloadScreenCount * innerHeight
     // 底部的范围: 向下预加载preloadScreenCount个屏幕
     const maxLimit = tp + (bottomPreloadScreenCount + 1) * innerHeight
-    
+
     const items = []
-    
+
     for (let i = 0; i < length; i++) {
-        const v = itemSpaces[i]
-        const t = v.top
-        const b = v.bottom
-        // 这里的逻辑是：
-        // 只要元素部分出现在可视区域里就算作可见，因此有三段判断:
-        // 1. 元素的上边界在容器内
-        // 2. 元素的下边界在容器内
-        // 3. 元素覆盖了整个容器
-        if(
-            (t >= minLimit && t <= maxLimit) ||
-            (b >= minLimit && b <= maxLimit) ||
-            (t < minLimit && b > maxLimit)
-        ) {
-            items.push(v)
-        }
+      const v = itemSpaces[i]
+      const t = v.top
+      const b = v.bottom
+      // 这里的逻辑是：
+      // 只要元素部分出现在可视区域里就算作可见，因此有三段判断:
+      // 1. 元素的上边界在容器内
+      // 2. 元素的下边界在容器内
+      // 3. 元素覆盖了整个容器
+      if (
+        (t >= minLimit && t <= maxLimit) ||
+        (b >= minLimit && b <= maxLimit) ||
+        (t < minLimit && b > maxLimit)
+      ) {
+        items.push(v)
+      }
     }
     return items
-  },[
+  }, [
     itemSpaces,
     virtual,
     contentTop,
     preloadScreenCount,
-    contentRef.current?.parentElement?.offsetTop,
-    contentRef.current?.parentElement?.clientHeight
   ])
 
-   // 获取当前元素应该处于哪一列
+  // 获取当前元素应该处于哪一列
   const getColumnIndex = (): number => {
     return columnsTop.current.indexOf(Math.min(...columnsTop.current));
   }
 
+  const isNumber = (value: any): boolean => {
+    return Object.prototype.toString.call(value) === '[object Number]';
+  };
+
   return (
     <div
-        ref={contentRef}
-        style={{
-            position: 'relative',
-            willChange: 'height',
-            height: `${Math.max(...columnsTop.current)}px`,
-            padding: `${isNumber(padding) ? padding + 'px' : padding}`
-        }}
+      ref={contentRef}
+      style={{
+        position: 'relative',
+        willChange: 'height',
+        height: `${Math.max(...columnsTop.current)}px`,
+        padding: `${isNumber(padding) ? padding + 'px' : padding}`
+      }}
     >
       {itemRenderList.map((data) => (
         <div
-            key={data.item[rowKey] ?? data.index}
-            style={{
-              position: 'absolute',
-              contentVisibility: 'auto',
-              width: `${itemWidth}px`,
-              height: `${data.height}px`,
-              transform: `translate(${data.left}px, ${data.top}px)`,
-              containIntrinsicSize: `${itemWidth}px ${data.height}px`
+          key={`${data.item[rowKey] + data.index}`}
+          style={{
+            position: 'absolute',
+            contentVisibility: 'auto',
+            width: `${itemWidth}px`,
+            height: `${data.height}px`,
+            transform: `translate(${data.left}px, ${data.top}px)`,
+            containIntrinsicSize: `${itemWidth}px ${data.height}px`
           }}
-            data-index={data.index}
+          data-index={data.index}
         >
-            {children ? children(data.item, data.index) : null}
+          {children ? children(data.item, data.index) : null}
         </div>
       ))}
     </div>
   );
 };
 
-export default VirtualWaterfall;
+export default Masonry;
+

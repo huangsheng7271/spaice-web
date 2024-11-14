@@ -1,18 +1,18 @@
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 type CategoryPanelProps = {
-    isExpanded: boolean;
-    setExpanded: (expanded: boolean) => void;
-    itemsHeight:number;
-    setItemsHeight: (height: number) => void;
-  };
+  isExpanded: boolean;
+  setExpanded: (expanded: boolean) => void;
+  itemsHeight: number;
+  setItemsHeight: (height: number) => void;
+};
 
 export const CategoryPanel = ({
-    isExpanded,setExpanded,itemsHeight,setItemsHeight
-}:CategoryPanelProps) => {
+  isExpanded, setExpanded, itemsHeight, setItemsHeight
+}: CategoryPanelProps) => {
 
- const categories = [
+  const categories = [
     "热门",
     "国风美学",
     "海报设计",
@@ -20,31 +20,20 @@ export const CategoryPanel = ({
     "写实",
     "游戏",
     "摄影",
-
-    "热门",
-    "国风美学",
-    "海报设计",
-    "插画设计",
-    "写实",
-    "游戏",
-    "摄影",
-
-    "热门",
-    "国风美学",
-    "海报设计",
-    "插画设计",
-    "写实",
-    "游戏",
-    "摄影",
-
-    "热门",
-    "国风美学",
-    "海报设计",
-    "插画设计",
-    "写实",
-    "游戏",
-    "摄影",
-
+    "热门1",
+    "国风美学1",
+    "海报设计1",
+    "插画设计1",
+    "写实1",
+    "游戏1",
+    "摄影1",
+    "热门2",
+    "写实2",
+    "国风美学2",
+    "海报设计2",
+    "插画设计2",
+    "游戏2",
+    "摄影2",
   ];
 
   // useState 用于管理选中的标题
@@ -57,58 +46,64 @@ export const CategoryPanel = ({
   };
 
   useEffect(() => {
-        if (itemsRef.current) {
-            setItemsHeight(itemsRef.current.scrollHeight);
-        }
-   }, []);
-  
+    if (itemsRef.current) {
+      setItemsHeight(itemsRef.current.scrollHeight)
+    }
+  }, []);
+
+  let categoryAfterTop = -8;
+  if (itemsHeight && isExpanded) {
+    categoryAfterTop = itemsHeight + 8;
+  } else {
+    categoryAfterTop = 32 + 8;
+  }
+
+
   return (
-    <> 
-        <div className="tool category" style={{ top: '52px', width: '1240px' }}>
-            <div className="wrap">
-                <div className="panelConatiner" style={{ width: '100%' }}>
-                    <div className="slidingContainerWrapper arrowDisabled" style={{ opacity: 1 }}>
-                        <div className="slidingContainer arrowDisabled">
-                            <div ref={itemsRef} className={`items ${isExpanded ? 'expanded' : ''}`}>
-                                {categories.map((category) => (
-                                    <div key={category}
-                                        className={`panelTitle ${selected === category ? 'selected' : ''}`}
-                                        onClick={() => setSelected(category)}
-                                    >
-                                        {category}
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+    <>
+      <div className="tool category" style={{ top: '52px', width: '1240px' }}>
+        <div className="wrap">
+          <div className="panelConatiner" style={{ width: '100%' }}>
+            <div className="slidingContainerWrapper arrowDisabled" style={{ opacity: 1 }}>
+              <div className="slidingContainer arrowDisabled">
+                <div ref={itemsRef} className={`items ${isExpanded ? 'expanded' : ''}`}>
+                  {categories.map((category) => (
+                    <div key={category}
+                      className={`panelTitle ${selected === category ? 'selected' : ''}`}
+                      onClick={() => setSelected(category)}
+                    >
+                      {category}
                     </div>
+                  ))}
                 </div>
-
-                {itemsHeight > 32 && (
-                    <div className="mweb-button-default mwebButton arrow" onClick={toggleExpand}> 
-                        {isExpanded ? (
-                            <ChevronUp
-                                size={20}
-                                color='var(--text-secondary)'
-                            />
-                        ) : (
-                            <ChevronDown
-                                size={20}
-                                color='var(--text-secondary)'
-                            />
-                        )}
-                    </div>
-                )}
+              </div>
             </div>
-        </div>
+          </div>
 
-         <style jsx>{`
+          {itemsHeight > 32 && (
+            <div className="mweb-button-default mwebButton arrow" onClick={toggleExpand}>
+              {isExpanded ? (
+                <ChevronUp
+                  size={20}
+                  color='var(--text-secondary)'
+                />
+              ) : (
+                <ChevronDown
+                  size={20}
+                  color='var(--text-secondary)'
+                />
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <style jsx>{`
             .tool{
-                height: 32px;
                 margin-bottom: 16px;
             }
             .category {
                 background: var(--background-1);
-                height: 32px;
                 margin-bottom: 0;
                 padding-bottom: 16px;
                 position: sticky;
@@ -122,7 +117,7 @@ export const CategoryPanel = ({
                 top: -1px;
                 width: 100%;
             }
-            {/* .category:after {
+            .category:after {
                 border: 8px solid var(--background-1);
                 border-bottom-left-radius: 16px;
                 border-bottom-right-radius: 16px;
@@ -130,14 +125,16 @@ export const CategoryPanel = ({
                 border-top-right-radius: 16px;
                 bottom: -8px;
                 content: "";
-                height: calc(100vh - 124px);
+                height: 100vh;
                 left: -8px;
                 pointer-events: none;
                 position: absolute;
                 right: -8px;
-                top: -8px;
-                top: 40px;
-            } */}
+                {/*top: -8px;*/}
+
+                top: ${categoryAfterTop}px;
+                transition: top 0.2s ease;
+            }
             .tool .wrap {
                 background: var(--background-1);
                 display: flex;
@@ -158,19 +155,18 @@ export const CategoryPanel = ({
                 transition: mask-image 0.2s cubic-bezier(0.34, 0.69, 0.1, 1), -webkit-mask-image 0.2s cubic-bezier(0.34, 0.69, 0.1, 1);
             }
             .slidingContainer .items {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 8px;
-                transition: transform 0.2s cubic-bezier(0.34, 0.69, 0.1, 1);
-                width: fit-content;
-
-                overflow: hidden;
-                height: 32px;
-                transition: height 0.2s ease;
+              display: flex;
+              flex-wrap: wrap;
+              gap: 8px;
+              transition: transform 0.2s cubic-bezier(0.34, 0.69, 0.1, 1);
+              width: fit-content;
+              overflow: hidden;
+              height: 32px;
+              transition: height 0.2s ease;
             }
 
             .slidingContainer .expanded {
-                height: ${itemsHeight + 'px'};
+              height:${itemsHeight}px  
             }
 
             .tool .selected {
@@ -242,6 +238,6 @@ export const CategoryPanel = ({
 
         `}</style>
     </>
-    
+
   );
 };

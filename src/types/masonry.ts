@@ -8,3 +8,12 @@ export interface ItemOption {
     user: string;
     views: number;
 }
+
+export interface PageProps{
+    page: number;
+    size: number;
+    total: number;
+    max: number;
+    list: ItemOption[];
+    end: boolean;
+  }

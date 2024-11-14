@@ -30,7 +30,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, asChild = false, ...props }, ref) => {
+    ({className, variant, size, asChild = false, ...props}, ref) => {
         // 组件的实现
         //const Comp = asChild ? Slot : "button"
         return (
